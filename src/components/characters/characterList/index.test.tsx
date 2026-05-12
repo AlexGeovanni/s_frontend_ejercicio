@@ -36,10 +36,7 @@ jest.mock("@/components/ui/skeleton/characterContentSkeletonCard", () => ({
   CharacterContentCardSkeleton: () => <div>Cargando lista...</div>,
 }));
 
-/*
-  Pruebas del contenedor de listado de personajes.
-  Se mockean hijos para enfocarse en la lógica de render y callbacks.
- */
+
 describe("CharacterList", () => {
   const infoBase = { count: 3, pages: 3, next: "next", prev: null };
 
@@ -48,6 +45,7 @@ describe("CharacterList", () => {
     render(
       <CharacterList
         loading={true}
+        error={null}
         data={[]}
         info={infoBase}
         currentPage={1}
@@ -68,6 +66,7 @@ describe("CharacterList", () => {
     render(
       <CharacterList
         loading={false}
+        error={null}
         data={[
           { id: 1, name: "Rick Sanchez" } as never,
           { id: 2, name: "Morty Smith" } as never,
@@ -98,7 +97,11 @@ describe("CharacterList", () => {
     render(
       <CharacterList
         loading={false}
-        data={[]}
+        error={null}
+        data={[
+          { id: 1, name: "Rick Sanchez" } as never,
+          { id: 2, name: "Morty Smith" } as never,
+        ]}
         info={infoBase}
         currentPage={1}
         selectedId={null}

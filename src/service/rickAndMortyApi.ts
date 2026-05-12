@@ -44,7 +44,6 @@ const EMPTY_RESPONSE: CharactersResponse = {
   info: { count: 0, pages: 0, next: null, prev: null },
   results: [],
 };
-
 export const searchCharactersByName = async (
   name: string,
   page = 1,
@@ -60,7 +59,9 @@ export const searchCharactersByName = async (
       return EMPTY_RESPONSE;
     }
 
-    throw error;
+    throw new Error("Error buscando personajes", {
+      cause: error,
+    });
   }
 };
 

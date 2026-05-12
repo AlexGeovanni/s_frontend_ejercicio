@@ -31,6 +31,7 @@ export default function Favorites() {
     };
 
     fetchFavoritesCharaters();
+    return ;
   }, [favorites]);
 
   // paginación

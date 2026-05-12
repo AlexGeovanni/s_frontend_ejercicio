@@ -26,8 +26,6 @@ export default function Home() {
   }, [searchInput]);
 
   useEffect(() => {
-    const controller = new AbortController();
-
     const fetchCharaters = async () => {
       setLoading(true)
       try {
@@ -47,7 +45,7 @@ export default function Home() {
     };
 
     fetchCharaters();
-    return () => controller.abort();
+    return ;
   }, [currentPage, searchQuery]);
 
   return (

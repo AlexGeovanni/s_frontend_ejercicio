@@ -23,6 +23,9 @@ describe("rickAndMortyApi", () => {
     };
 
     fetchMock.mockResolvedValue({
+      ok: true,
+      status: 200,
+      statusText: "OK",
       json: async () => apiResponse,
     });
 
@@ -63,6 +66,7 @@ describe("rickAndMortyApi", () => {
     fetchMock.mockResolvedValue({
       status: 500,
       ok: false,
+      statusText: "Internal Server Error",
       json: async () => ({}),
     });
     //Ejecuta la búsqueda y verifica que se lance el error de dominio esperado.
@@ -90,7 +94,7 @@ describe("rickAndMortyApi", () => {
 
     // Verifica que la URL incluya el texto codificado y la página.
     expect(fetchMock).toHaveBeenCalledWith(
-      "https://rickandmortyapi.com/api/character/?name=Rick%20Sanchez&page=3",
+      "https://rickandmortyapi.com/api/character?name=Rick%20Sanchez&page=3",
     );
   });
 
@@ -111,6 +115,9 @@ describe("rickAndMortyApi", () => {
     const singleCharacter = { id: 2, name: "Morty Smith" };
 
     fetchMock.mockResolvedValue({
+      ok: true,
+      status: 200,
+      statusText: "OK",
       json: async () => singleCharacter,
     });
 
@@ -133,6 +140,9 @@ describe("rickAndMortyApi", () => {
     ];
 
     fetchMock.mockResolvedValue({
+      ok: true,
+      status: 200,
+      statusText: "OK",
       json: async () => characters,
     });
 

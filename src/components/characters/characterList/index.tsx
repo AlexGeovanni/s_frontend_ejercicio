@@ -39,7 +39,7 @@ export default function CharacterList({
         )}
       </div>
       {loading && <CharacterContentCardSkeleton />}
-      {!loading && data.length === 0 && !error && (
+      {!loading && !data.length && !error && (
         <div className={styles.contentEmpty}>
            <p>No se encontraron personajes</p>
         </div>
