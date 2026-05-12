@@ -13,6 +13,7 @@ export default function Favorites() {
   const [data, setData] = useState<Character[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchFavoritesCharaters = async () => {
@@ -20,9 +21,11 @@ export default function Favorites() {
       try {
         const response = await getFavoritesCharacters(favorites);
         setData(response);
+        setError(null);
       } catch {
         setData([]);
-      } finally {
+        setError("Error al cargar los favoritos");
+        } finally {
         setLoading(false);
       }
     };
@@ -52,6 +55,7 @@ export default function Favorites() {
         <CharacterList
           key={"favorite-list"}
           loading={loading}
+          error={error}
           data={charactersData}
           info={{
             count: data.length,

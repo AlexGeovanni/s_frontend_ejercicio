@@ -15,6 +15,7 @@ export default function Home() {
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -35,11 +36,11 @@ export default function Home() {
           : await getCharacters(currentPage);
           setInfo(response.info);
           setData(response.results);
-        
+          setError(null);
       } catch {
           setInfo(null);
           setData([]);
-        
+          setError("Error al cargar los personajes");
       } finally{
         setLoading(false)
       }
@@ -56,6 +57,7 @@ export default function Home() {
         <CharacterList
           key={searchQuery}
           loading={loading}
+          error={error}
           data={data}
           info={info}
           currentPage={currentPage}

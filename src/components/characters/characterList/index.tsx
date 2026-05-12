@@ -6,6 +6,7 @@ import CharacterCard from "../characterCard";
 import { CharacterContentCardSkeleton } from "@/components/ui/skeleton/characterContentSkeletonCard";
 interface Props {
   loading: boolean;
+  error: string | null;
   data: Character[];
   info: InfoPage | null;
   currentPage: number;
@@ -16,6 +17,7 @@ interface Props {
 
 export default function CharacterList({
   loading,
+  error,
   data,
   info,
   currentPage,
@@ -23,11 +25,13 @@ export default function CharacterList({
   setSelectedId,
   setCurrentPage,
 }: Props) {
+
+  
   return (
     <>
       <div className={styles.headerList}>
         <h2>Personajes</h2>
-        {info && (
+        {info && !loading && data.length > 0 && (
           <p>
             {info?.count ?? 0} resultado{(info?.count ?? 0) !== 1 ? "s" : ""} —
             Página {currentPage} de {info?.pages ?? 0}
@@ -35,8 +39,17 @@ export default function CharacterList({
         )}
       </div>
       {loading && <CharacterContentCardSkeleton />}
-      
-      {data.length > 0 && !loading && (
+      {!loading && data.length === 0 && !error && (
+        <div className={styles.contentEmpty}>
+           <p>No se encontraron personajes</p>
+        </div>
+      )}
+      {!loading && error && (
+        <div className={styles.contentEmpty}>
+          <p>{error}</p>
+        </div>
+      )}
+      {!loading && !error && data.length > 0 && (<>
         <div className={styles.contentList}>
           {data.map((character) => (
             <CharacterCard
@@ -46,13 +59,13 @@ export default function CharacterList({
             />
           ))}
         </div>
-      )}
+        <Pagination
+          info={info}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </>)}
       <CharacterModal id={selectedId} onClose={() => setSelectedId(null)} />
-      {info && <Pagination
-        info={info}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />}
     </>
   );
 }

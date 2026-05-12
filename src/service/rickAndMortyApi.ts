@@ -1,65 +1,74 @@
 import type { Character, InfoPage } from "@/types/character";
 
-const BASE_URL="https://rickandmortyapi.com/api/character"
+const BASE_URL = "https://rickandmortyapi.com/api/character";
 
 export interface CharactersResponse {
-  info: InfoPage
+  info: InfoPage;
   results: Character[];
 }
 
-export const getCharacters = async (page:number=1): Promise<CharactersResponse> => {
-  const response = await fetch(
-     `${BASE_URL}?page=${page}`
-  );
+//Error personalizado
+export class ApiError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+  ) {
+    super(message);
+  }
+}
 
-  const data: CharactersResponse = await response.json();
+// Fetch centralizado
+async function apiFetch<T>(url: string): Promise<T> {
+  const res = await fetch(url);
 
-  return data;
-};
+  if (!res.ok) {
+    throw new ApiError(
+      res.status,
+      `API Error: ${res.status} - ${res.statusText}`,
+    );
+  }
 
-export const getCharactersById = async (id:number): Promise<Character> => {
-  const response = await fetch(
-    `${BASE_URL}/${id}`
-  );
-  if(response.status !=200) throw new Error()
-  const data = await response.json();
+  return res.json();
+}
 
-  return data;
+// Characters paginados
+export const getCharacters = (page = 1) =>
+  apiFetch<CharactersResponse>(`${BASE_URL}?page=${page}`);
+
+// Character por ID
+export const getCharactersById = (id: number) =>
+  apiFetch<Character>(`${BASE_URL}/${id}`);
+
+// Search by name
+const EMPTY_RESPONSE: CharactersResponse = {
+  info: { count: 0, pages: 0, next: null, prev: null },
+  results: [],
 };
 
 export const searchCharactersByName = async (
   name: string,
-  page: number = 1,
+  page = 1,
 ): Promise<CharactersResponse> => {
-  const q = encodeURIComponent(name.trim());
-  const response = await fetch(
-    `${BASE_URL}/?name=${q}&page=${page}`,
-  );
+  const query = encodeURIComponent(name.trim());
 
-  if (response.status === 404) {
-    return {
-      info: { count: 0, pages: 0, next: null, prev: null },
-      results: [],
-    };
+  try {
+    return await apiFetch<CharactersResponse>(
+      `${BASE_URL}?name=${query}&page=${page}`,
+    );
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) {
+      return EMPTY_RESPONSE;
+    }
+
+    throw error;
   }
-
-  if (!response.ok) {
-    throw new Error("Error buscando personajes");
-  }
-
-  const data: CharactersResponse = await response.json();
-
-  return data;
 };
 
+// Favorites por IDs
+export const getFavoritesCharacters = (ids: number[]) => {
+  if (!ids.length) return Promise.resolve([]);
 
-export const getFavoritesCharacters = async (ids: number[]): Promise<Character[]> => {
-  if (ids.length === 0) return [];
-
-  const res = await fetch(
-    `${BASE_URL}/${ids.join(",")}`
+  return apiFetch<Character | Character[]>(`${BASE_URL}/${ids.join(",")}`).then(
+    (data) => (Array.isArray(data) ? data : [data]),
   );
-  
-  const data = await res.json();
-  return Array.isArray(data) ? data : [data];
 };
