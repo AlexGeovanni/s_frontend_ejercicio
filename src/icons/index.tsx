@@ -58,21 +58,21 @@ export const SearchIcon = ({ size = 18, className }: Props) => (
     <path
       d="M7.66732 14C11.1651 14 14.0007 11.1645 14.0007 7.66671C14.0007 4.1689 11.1651 1.33337 7.66732 1.33337C4.16951 1.33337 1.33398 4.1689 1.33398 7.66671C1.33398 11.1645 4.16951 14 7.66732 14Z"
       stroke="#181A1B"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M14.6673 14.6667L13.334 13.3334"
       stroke="#181A1B"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
 
-export const ArrowRight = ({ size = 18, className }: Props) => (
+export const ArrowRightIcon = ({ size = 18, className }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -91,7 +91,8 @@ export const ArrowRight = ({ size = 18, className }: Props) => (
     />
   </svg>
 );
-export const ArrowLeft = ({ size = 18, className }: Props) => (
+
+export const ArrowLeftIcon = ({ size = 18, className }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -107,6 +108,29 @@ export const ArrowLeft = ({ size = 18, className }: Props) => (
     <path
       d="M7.41016 1.41L2.83016 6L7.41016 10.59L6.00016 12L0.000156403 6L6.00016 0L7.41016 1.41Z"
       fill="#C4CDD5"
+    />
+  </svg>
+);
+
+export const HomeIcon = ({ size = 18, className }: Props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="none"
+    strokeWidth={1.2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path
+      d="M7.63166 17.3096L7.63166 14.754C7.63165 14.1039 8.16158 13.5758 8.81816 13.5714H11.2232C11.8829 13.5714 12.4177 14.1009 12.4177 14.754V14.754V17.3175C12.4176 17.8694 12.8625 18.3205 13.4198 18.3334H15.0232C16.6216 18.3334 17.9173 17.0506 17.9173 15.4683V15.4683V8.19828C17.9088 7.57577 17.6135 6.99121 17.1156 6.61094L11.6321 2.23783C10.6714 1.47639 9.30582 1.47639 8.34516 2.23783L2.88567 6.61888C2.38587 6.9976 2.09014 7.58314 2.08398 8.20621L2.08398 15.4683C2.08398 17.0506 3.37971 18.3334 4.97808 18.3334H6.58145C7.15261 18.3334 7.61563 17.875 7.61563 17.3096V17.3096"
+      stroke="white"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

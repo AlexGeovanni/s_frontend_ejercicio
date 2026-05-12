@@ -19,8 +19,22 @@
   align-items: center;
   border: 1px solid #dfe3e8;
   border-radius: 0.25rem;
+  font-weight: bold;
+  color: #000;
+  transition: all ease 0.5s;
+}
+.btnPagination:hover{
+  border: 1px solid #000;
 }
 
-.icon {
-  /* color: #C4CDD5; */
+.btnPagination:disabled{
+    background-color: #919EAB;
+    cursor:not-allowed;
 }
+
+.activePage{
+    color: #4200FF !important;
+    border:1px solid #4200FF !important;
+}
+
+

@@ -17,3 +17,11 @@ export interface LocationInfo {
   name: string;
   url: string;
 }
+
+
+export interface InfoPage{
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
