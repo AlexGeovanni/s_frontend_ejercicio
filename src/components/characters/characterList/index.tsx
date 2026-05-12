@@ -4,6 +4,9 @@ import CharacterModal from "../characterModal";
 import Pagination from "../pagination";
 import CharacterCard from "../characterCard";
 import { CharacterContentCardSkeleton } from "@/components/ui/skeleton/characterContentSkeletonCard";
+import StatusMessage from "@/components/ui/statusMessage";
+import { useLocation } from "react-router-dom";
+
 interface Props {
   loading: boolean;
   error: string | null;
@@ -25,8 +28,8 @@ export default function CharacterList({
   setSelectedId,
   setCurrentPage,
 }: Props) {
-
-  
+  const location = useLocation();
+  const isFavorites = location.pathname === "/favorites";
   return (
     <>
       <div className={styles.headerList}>
@@ -40,31 +43,36 @@ export default function CharacterList({
       </div>
       {loading && <CharacterContentCardSkeleton />}
       {!loading && !data.length && !error && (
-        <div className={styles.contentEmpty}>
-           <p>No se encontraron personajes</p>
-        </div>
+        <StatusMessage
+          variant="empty"
+          title={`No se encontraron personajes ${isFavorites ? "favoritos" : ""}`}
+        />
       )}
       {!loading && error && (
-        <div className={styles.contentEmpty}>
-          <p>{error}</p>
-        </div>
-      )}
-      {!loading && !error && data.length > 0 && (<>
-        <div className={styles.contentList}>
-          {data.map((character) => (
-            <CharacterCard
-              key={character.id}
-              character={character}
-              setSelectedId={setSelectedId}
-            />
-          ))}
-        </div>
-        <Pagination
-          info={info}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
+        <StatusMessage
+          variant="error"
+          title="No se pudo cargar la lista"
+          description="Hubo un problema al conectar con la API. Revisa tu conexión e inténtalo de nuevo más tarde."
         />
-      </>)}
+      )}
+      {!loading && !error && data.length > 0 && (
+        <>
+          <div className={styles.contentList}>
+            {data.map((character) => (
+              <CharacterCard
+                key={character.id}
+                character={character}
+                setSelectedId={setSelectedId}
+              />
+            ))}
+          </div>
+          <Pagination
+            info={info}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      )}
       <CharacterModal id={selectedId} onClose={() => setSelectedId(null)} />
     </>
   );

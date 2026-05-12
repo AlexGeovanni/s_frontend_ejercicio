@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import CharacterList from ".";
 
 jest.mock("../characterCard", () => ({
@@ -43,16 +44,18 @@ describe("CharacterList", () => {
   test("debe mostrar estado de carga cuando loading es true", () => {
     // Renderiza el listado en estado loading.
     render(
-      <CharacterList
-        loading={true}
-        error={null}
-        data={[]}
-        info={infoBase}
-        currentPage={1}
-        selectedId={null}
-        setSelectedId={jest.fn()}
-        setCurrentPage={jest.fn()}
-      />,
+      <MemoryRouter>
+        <CharacterList
+          loading={true}
+          error={null}
+          data={[]}
+          info={infoBase}
+          currentPage={1}
+          selectedId={null}
+          setSelectedId={jest.fn()}
+          setCurrentPage={jest.fn()}
+        />
+      </MemoryRouter>,
     );
     //Verifica que se vea el skeleton de carga.
     expect(screen.getByText("Cargando lista...")).toBeInTheDocument();
@@ -64,20 +67,22 @@ describe("CharacterList", () => {
     const setSelectedId = jest.fn();
     //Renderiza el listado con datos simulados.
     render(
-      <CharacterList
-        loading={false}
-        error={null}
-        data={[
-          { id: 1, name: "Rick Sanchez" } as never,
-          { id: 2, name: "Morty Smith" } as never,
-          { id: 3, name: "Summer Smit" } as never,
-        ]}
-        info={infoBase}
-        currentPage={1}
-        selectedId={null}
-        setSelectedId={setSelectedId}
-        setCurrentPage={jest.fn()}
-      />,
+      <MemoryRouter>
+        <CharacterList
+          loading={false}
+          error={null}
+          data={[
+            { id: 1, name: "Rick Sanchez" } as never,
+            { id: 2, name: "Morty Smith" } as never,
+            { id: 3, name: "Summer Smit" } as never,
+          ]}
+          info={infoBase}
+          currentPage={1}
+          selectedId={null}
+          setSelectedId={setSelectedId}
+          setCurrentPage={jest.fn()}
+        />
+      </MemoryRouter>,
     );
     //Hace click en un personaje.
     await user.click(screen.getByRole("button", { name: "Morty Smith" }));
@@ -95,19 +100,21 @@ describe("CharacterList", () => {
     const setCurrentPage = jest.fn();
     // Renderiza el listado con paginación activa.
     render(
-      <CharacterList
-        loading={false}
-        error={null}
-        data={[
-          { id: 1, name: "Rick Sanchez" } as never,
-          { id: 2, name: "Morty Smith" } as never,
-        ]}
-        info={infoBase}
-        currentPage={1}
-        selectedId={null}
-        setSelectedId={jest.fn()}
-        setCurrentPage={setCurrentPage}
-      />,
+      <MemoryRouter>
+        <CharacterList
+          loading={false}
+          error={null}
+          data={[
+            { id: 1, name: "Rick Sanchez" } as never,
+            { id: 2, name: "Morty Smith" } as never,
+          ]}
+          info={infoBase}
+          currentPage={1}
+          selectedId={null}
+          setSelectedId={jest.fn()}
+          setCurrentPage={setCurrentPage}
+        />
+      </MemoryRouter>,
     );
     // Hace click en el botón de cambio de página mockeado.
     await user.click(screen.getByRole("button", { name: "Ir a página 2" }));
