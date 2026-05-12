@@ -26,7 +26,6 @@
   }
 }
 
-
 /* Modal skeleton */
 .modalSkeleton {
   position: relative;
@@ -38,18 +37,24 @@
 .modalContent {
   display: block;
   width: 100%;
-  height:520px;
+  height: 520px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #696969;
 }
-
-/* ===== Utility: grid of card skeletons ===== */
-.gridSkeleton {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
-  max-width: 1400px;
-  margin: 0 auto;
+.contentCardSkeleton {
+  background-color: #eeeeee;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 80dvh;
+  margin-top:0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #696969;
 }

@@ -1,15 +1,20 @@
 import styles from "./characterModal.module.css";
-import Modal from "../ui/modal";
 import { useEffect, useState } from "react";
 import { getCharactersById } from "@/service/rickAndMortyApi";
 import type { Character } from "@/types/character";
-import { CharacterModalSkeleton } from "../ui/skeleton/characterModalSkeleton";
+import { CharacterModalSkeleton } from "@/components/ui/skeleton/characterModalSkeleton";
+import Modal from "@/components/ui/modal";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { StarFillIcon, StarIcon } from "@/icons";
+import { toggleFavorite } from "@/store/features/favorites/favoritesSlice";
 
 type Props = {
   id: number | null;
   onClose: () => void;
 };
 export default function CharacterModal({ id, onClose }: Props) {
+  const dispatch = useAppDispatch()
+  const favorites = useAppSelector((state)=>state.favorites)
   const [data, setData] = useState<Character | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,13 +41,14 @@ export default function CharacterModal({ id, onClose }: Props) {
 
   if (!id) return null;
 
-
   const handleClose = () => {
     setData(null);
     setError(null);
     setLoading(false);
     onClose();
   };
+
+  const isFavorite = data && favorites.includes(data?.id)
 
   return (
     <Modal open={!!id} onChange={handleClose}>
@@ -55,6 +61,18 @@ export default function CharacterModal({ id, onClose }: Props) {
               <figure>
                 <img className={styles.imgModal} src={data.image} />
               </figure>
+              <div className={styles.contentBtnFavorite}>
+                <button
+                  onClick={() => dispatch(toggleFavorite(id))}
+                  className={styles.btnFav}
+                >
+                  {isFavorite ? (
+                    <StarFillIcon />
+                  ) : (
+                    <StarIcon className={styles.icon} />
+                  )}
+                </button>
+              </div>
             </div>
             <div>
               <h2 className={styles.title}>{data?.name}</h2>
