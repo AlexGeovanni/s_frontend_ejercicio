@@ -1,6 +1,5 @@
 // Mock de estilos para Jest.
 // Evita errores al importar CSS Modules dentro de componentes.
-export default {};
 const styles = new Proxy(
   {},
   {
