@@ -1,75 +1,71 @@
-# React + TypeScript + Vite
+# SNGULAR - Test Front-End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación Front-End en React para explorar personajes de Rick and Morty, buscar por nombre y gestionar una lista de favoritos.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React + TypeScript
+- Vite
+- Redux Toolkit
+- React Router
+- Jest + Testing Library
 
-## React Compiler
+## Requisitos
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- Node.js 18+ (recomendado 20+)
+- pnpm
 
-Note: This will impact Vite dev & build performances.
+## Instalación
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts disponibles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Desarrollo
+pnpm dev
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Build de producción
+pnpm build
+
+# Previsualizar build
+pnpm preview
+
+# Lint
+pnpm lint
+
+# Tests
+pnpm test
+```
+
+## Funcionalidades principales
+
+- Listado de personajes con paginación.
+- Búsqueda por nombre.
+- Vista de favoritos.
+- Modal de detalle del personaje.
+
+## Estructura básica
+
+```text
+src/
+  components/   # Componentes reutilizables
+  page/         # Vistas principales (Home y Favorites)
+  service/      # Lógica de llamadas a API
+  store/        # Estado global con Redux Toolkit
+  test/         # Setup y utilidades de tests
+```
+
+## Testing
+
+El proyecto incluye pruebas unitarias e integración de componentes/páginas con Jest y Testing Library.
+
+Para ejecutar tests:
+
+```bash
+pnpm test -- --runInBand 
+o
+pnpm test 
 ```
