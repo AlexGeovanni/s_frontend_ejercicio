@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
-import './App.css'
 import Home from '@/page/home'
 import MainLayout from '@/components/layout/mainLayout'
+import Favorites from './page/favorites'
 
 function App() {
 
@@ -9,10 +9,10 @@ function App() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route path='/' element={<Home />} />
-        <Route path='/favorites' element={<></>} />
+        <Route path='/favorites' element={<Favorites />} />
       </Route>
     </Routes>
   )
 }
 
-export default App
+export default App;

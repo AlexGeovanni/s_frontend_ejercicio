@@ -1,0 +1,26 @@
+.contentPagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contentbtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btnPagination {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #dfe3e8;
+  border-radius: 0.25rem;
+}
+
+.icon {
+  /* color: #C4CDD5; */
+}
